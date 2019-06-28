@@ -1,0 +1,227 @@
+<ui:composition xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<!-- EXAMPLE-SOURCE-START -->
+
+	<h:form>
+		<p:growl id="message"></p:growl>
+
+		<p:tabView activeIndex="#{tabViewManagedBean.index}">
+			<p:tab title="SUMMARY">
+				<f:facet name="actions">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+							<i class="fa fa-gear" id="bor" style="cursor: pointer"
+								title="Background Operation Running" />
+
+						</div>
+
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+							<i class="fa fa-bell" id="notif" style="cursor: pointer"
+								title="Notifications" />
+
+						</div>
+
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+							<i class="fa fa-bars" id="view" style="cursor: pointer"
+								title="Views" />
+
+						</div>
+
+						<div class="ui-g-12 ui-md-6 ui-lg-6">
+							<p:menuButton value="admin" icon="fa fa-user"
+								style="width:100%; font-size:10pt">
+								<p:menuitem value="Setting" style="font-size:10pt" />
+								<p:menuitem value="Manage YAVA" style="font-size:10pt" />
+								<p:menuitem value="About" style="font-size:10pt" />
+								<p:separator />
+								<p:menuitem value="Sign Out" style="font-size:10pt" />
+							</p:menuButton>
+						</div>
+					</div>
+				</f:facet>
+				<p:breadCrumb style="font-size:10pt">
+					<p:menuitem value="Breadcrumb" />
+					<p:menuitem value="Services" />
+					<p:menuitem value="Zookeeper" />
+					<p:menuitem value="Summary" />
+				</p:breadCrumb>
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-2">Component</div>
+					<div class="ui-g-12 ui-md-10 ui-g-nopad">
+						<div class="ui-g-12 ui-g-nopad">
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-3">
+									<div>
+										<p:commandButton value="Started" id="withIcon1"
+											icon="ui-icon-circle-check" />
+									</div>
+									<div>
+										<p:outputLabel value="ZOOKEEPER SERVER"></p:outputLabel>
+									</div>
+								</div>
+
+								<div class="ui-g-12 ui-md-3">
+									<div>
+										<p:commandButton value="Started" id="withIcon1"
+											icon="ui-icon-circle-check" />
+									</div>
+									<div>
+										<p:outputLabel value="ZOOKEEPER SERVER"></p:outputLabel>
+									</div>
+								</div>
+
+								<div class="ui-g-12 ui-md-3">
+									<div>
+										<p:commandButton value="Started" id="withIcon1"
+											icon="ui-icon-circle-check" />
+									</div>
+									<div>
+										<p:outputLabel value="ZOOKEEPER SERVER"></p:outputLabel>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-2"></div>
+						<div class="ui-g-12 ui-md-10 ui-g-nopad">
+							<div class="ui-g-12 ui-g-nopad">
+
+								<div class="ui-g">
+									<div class="ui-g-12 ui-md-3">
+										<div>
+											<p:outputLabel value="3 Installed" />
+										</div>
+										<div>
+											<p:outputLabel value="ZOOKEEPER CLIENTS"></p:outputLabel>
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</p:tab>
+
+			<p:tab title="CONFIG">
+
+				<h:form>
+					<p:growl id="message"></p:growl>
+					<p:tabView activeIndex="#{tabViewManagedBean.index}">
+						<p:tab title="Zookeeper Server">
+
+							<h:panelGrid columns="2" cellpadding="5">
+								<p:outputLabel value="Href: " />
+								<p:outputLabel value="#{zookeeperViewJMX.href}"></p:outputLabel>
+
+								<p:outputLabel value="clusterName: " />
+								<p:outputLabel value="#{zookeeperViewJMX.clusterName}"></p:outputLabel>
+
+								<p:outputLabel value="stackId: " />
+								<p:outputLabel value="#{zookeeperViewJMX.stackID}"></p:outputLabel>
+
+								<f:facet name="footer">
+
+									<p:commandButton value="Do Save"
+										actionListener="#{zookeperView3.saveAction()}" />
+									<p:commandButton value="Do stuff4"
+										actionListener="#{zookeperView3.doSomeLogic4()}" />
+									<p:commandButton value="Do stuff5"
+										actionListener="#{zookeperView3.doSomeLogic5()}" />
+
+									<!--  
+				<p:commandButton value="Do stuff4" action="#{contohView.doSomeLogic4()}" ajax="false"/>
+				<p:commandButton value="Do stuff5" action="#{contohView.doSomeLogic5()}" ajax="false"/>
+				-->
+								</f:facet>
+
+							</h:panelGrid>
+						</p:tab>
+
+						<p:tab title="zookeeper-env">
+
+							<h:panelGrid columns="2" cellpadding="5">
+								<p:outputLabel value="Zookeeper Log Dir " />
+								<p:inputText value="#{zookeeperViewJMX.zk_log_dir}"></p:inputText>
+
+								<p:outputLabel value="Zookeeper PID Dir " />
+								<p:inputText disabled="true"
+									value="#{zookeeperViewJMX.zk_pid_dir}"></p:inputText>
+
+								<p:outputLabel value="Server Heapsize" />
+								<p:inputText value="#{zookeeperViewJMX.zk_server_heapsize}"></p:inputText>
+
+							</h:panelGrid>
+
+							<h:panelGrid columns="2" cellpadding="5">
+								<p:inputTextarea rows="15" cols="40"
+									value="#{zookeeperViewJMX.env_template}"></p:inputTextarea>
+							</h:panelGrid>
+
+
+
+						</p:tab>
+
+
+						<p:tab title="zoo.cfg">
+
+							<h:panelGrid columns="2" cellpadding="5">
+								<p:outputLabel value="Purge Interval : " />
+								<p:inputText value="#{zookeeperViewJMX.purgeInterval}"></p:inputText>
+
+								<p:outputLabel value="Snap Retain Count : " />
+								<p:inputText value="#{zookeeperViewJMX.snapRetainCount}"></p:inputText>
+
+								<p:outputLabel value="Client Port : " />
+								<p:inputText value="#{zookeeperViewJMX.clientPort}"></p:inputText>
+
+								<p:outputLabel value="Data DIR : " />
+								<p:inputText value="#{zookeeperViewJMX.dataDir}"></p:inputText>
+
+								<p:outputLabel value="Client Port : " />
+								<p:inputText value="#{zookeeperViewJMX.initLimit}"></p:inputText>
+
+								<p:outputLabel value="Sync Limit : " />
+								<p:inputText value="#{zookeeperViewJMX.syncLimit}"></p:inputText>
+
+								<p:outputLabel value="Tick Time: " />
+								<p:inputText value="#{zookeeperViewJMX.tickTime}"></p:inputText>
+							</h:panelGrid>
+
+
+						</p:tab>
+
+						<p:tab title="zookeeper-log4j">
+							<h:panelGrid columns="2" cellpadding="5">
+
+								<p:outputLabel value="Max Backup Size: " />
+								<p:inputText value="#{zookeeperViewJMX.maxBackupSize}"></p:inputText>
+
+								<p:outputLabel value="Number Backup Size: " />
+								<p:inputText value="#{zookeeperViewJMX.numberBackupSize}"></p:inputText>
+
+							</h:panelGrid>
+
+							<h:panelGrid>
+								<p:inputTextarea rows="23" cols="40"
+									value="#{zookeeperViewJMX.logTemplate}"></p:inputTextarea>
+							</h:panelGrid>
+						</p:tab>
+					</p:tabView>
+				</h:form>
+
+			</p:tab>
+
+
+		</p:tabView>
+	</h:form>
+
+</ui:composition>

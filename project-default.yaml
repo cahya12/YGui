@@ -1,0 +1,41 @@
+swarm:
+  bind:
+    address: 0.0.0.0
+  http:
+    port: 9091
+  
+  datasources:
+    jdbc-drivers:
+      com.mysql:
+        driver-class-name: com.mysql.jdbc.Driver
+        xa-datasource-class-name: com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
+        driver-module-name: com.mysql
+      org.postgresql:
+        driver-class-name: org.postgresql.Driver
+        xa-datasource-class-name: org.postgresql.xa.PGXADataSource
+        driver-module-name: org.postgresql
+
+        
+  logging:
+    file-handlers:
+      time_service_handler:
+        append: true
+        enabled: true
+        encoding: UTF-8
+        level: DEBUG
+        file:
+          path: "swarm.log"
+    console-handlers:
+      CONSOLE:
+        level: INFO
+    loggers:
+      com.poin:
+        use-parent-handlers: true
+        level: DEBUG
+        handlers:
+          - time_service_handler
+    root-logger:
+      level: INFO
+      handlers:
+        - time_service_handler
+        

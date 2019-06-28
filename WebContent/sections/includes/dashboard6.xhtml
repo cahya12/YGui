@@ -1,0 +1,510 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:form id="tabFormDash" style="width:1100x;">
+
+		<p:growl id="messageDash"></p:growl>
+		<p:tabView activeIndex="#{tabViewManagedBean.index}">
+
+			<p:tab title="METRICS">
+
+				<f:facet name="actions">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+							<i class="fa fa-gear" id="bor" style="cursor: pointer"
+								title="Background Operation Running" />
+						</div>
+
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+							<i class="fa fa-bell" id="notif" style="cursor: pointer"
+								title="Notifications" />
+						</div>
+
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+							<i class="fa fa-bars" id="view" style="cursor: pointer"
+								title="Views" />
+						</div>
+
+						<div class="ui-g-12 ui-md-6 ui-lg-6">
+							<p:menuButton value="admin" icon="fa fa-user"
+								style="width:100%; font-size:10pt">
+								<p:menuitem value="Setting" style="font-size:10pt" />
+								<p:menuitem value="Manage YAVA" style="font-size:10pt" />
+								<p:menuitem value="About" style="font-size:10pt" />
+								<p:separator />
+								<p:menuitem value="Sign Out" style="font-size:10pt" />
+							</p:menuButton>
+						</div>
+					</div>
+				</f:facet>
+
+				<h:panelGrid columns="2" cellpadding="0" value="test"
+					style="width:100%">
+					<p:breadCrumb style="font-size:10pt; float:left; width:60%">
+						<p:menuitem value="Breadcrumb" />
+						<p:menuitem value="Dashboard" />
+						<p:menuitem value="Metrics" />
+					</p:breadCrumb>
+
+					<h:panelGrid columns="2" cellpadding="0" value="test"
+						style="width:40%; float:right">
+						<p:tieredMenu>
+							<p:submenu label="Metric Actions">
+								<p:menuitem value="add" icon="fa fa-plus-circle" />
+								<p:submenu label="Edit" icon="fa fa-pencil">
+									<p:menuitem value="Reset all widget to default"
+										style="font-size:10pt" />
+								</p:submenu>
+							</p:submenu>
+						</p:tieredMenu>
+						<p:tieredMenu>
+							<p:submenu label="Periode">
+								<p:menuitem value="Last 1 Hours" />
+								<p:menuitem value="Last 2 Hours" />
+								<p:menuitem value="Last 4 Hours" />
+								<p:menuitem value="Last 12 Hours" />
+								<p:menuitem value="Last 24 Hours" />
+								<p:menuitem value="Last 1 week" />
+								<p:menuitem value="Last 1 month" />
+								<p:menuitem value="Last 1 year" />
+								<p:menuitem value="Custom" />
+							</p:submenu>
+						</p:tieredMenu>
+					</h:panelGrid>
+
+				</h:panelGrid>
+
+				<style type="text/css">
+.ui-panel, div.ui-state-hover {
+	/* margin-left: 16px;
+		margin-top: 16px; */
+	/* 	width: 1024px;
+		height: 272px; */
+	/* width: 256px;
+	height: 128px; */
+	
+}
+
+.ui-dashboard-column {
+	/* margin: 16px;
+	                width: 1024px;
+	                height: 272px; */
+	padding: 0px;
+	margin: 0px;
+}
+</style>
+
+				<div style="height: 1152px">
+					<h:form id="form">
+
+						<p:growl id="msgs" showDetail="true" />
+
+						<!-- <p:dataTable value="#{hdfsDiskView._bbs_}" var="hdfsDatasetState"
+							style="margin-top: 16px;">
+							<p:column headerText="Server Time">
+								<h:outputText id="st" value="#{hdfsDatasetState.serverTime}" />
+								<p:poll interval="1" update="st" />
+							</p:column>
+
+						</p:dataTable> -->
+
+						<p:growl>
+							<p:autoUpdate />
+						</p:growl>
+
+						<p:dashboard id="board" model="#{dashboardView.model}">
+							<p:ajax event="reorder" listener="#{dashboardView.handleReorder}"
+								update="msgs" /> 
+
+							<!-- Chart Metrics HDFS Disk Usage -->
+							<!-- <p:panel id="HDFSDiskUsage" header="HDFS Disk Usage (GB)"
+								style="font-size:14pt; width:448px; height:292px; margin-top: 32px; margin-right: 248px; text-align: center">
+								<p:donutChart id="hdfs" model="#{hdfsDiskView.donutModel}"
+									style="width: 100%; height: 224px; stroke: crimson;" />
+								<p:poll interval="10" update="hdfs" />
+
+								<h:outputText id="prtg" value="#{hdfsDiskView._percentage}"
+									style="font-size:16pt; font-weight: bold" />
+								<p:poll interval="10" update="prtg" />
+							</p:panel> -->
+							<!-- End HDFS Disk Usage -->
+
+							<!-- Chart Metrics Memory Usage -->
+							<!-- <p:panel id="memoryUsage" header="Memory Usage"
+								style="font-size:14pt; width:448px; height:292px; margin-top: 32px; text-align: center">
+								<p:lineChart id="memory"
+									model="#{operatingSystemView.lineModel}"
+									style="width: 100%; height: 224px; stroke: crimson;" />
+								<p:poll interval="300" update="memory" />
+							</p:panel> -->
+							<!-- End Memory Usage -->
+
+							<!-- Start Threading -->
+							<!-- <p:panel id="threading" header="Threading"
+								style="font-size:14pt; width:448px; height:292px; margin-top: 32px; margin-right: 248px; text-align: center">
+
+								<p:dataTable value="#{threadingView._bbs_}" var="threading"
+									style="margin-bottom: 16px;">
+									<p:column headerText="Total Started Thread Count">
+										<h:outputText id="tstc"
+											value="#{threading.totalStartedThreadCount}" />
+										<p:poll interval="10" update="tstc" />
+									</p:column>
+								</p:dataTable>
+
+								<p:dataTable value="#{threadingView._bbs_}" var="threading"
+									style="margin-bottom: 16px;">
+									<p:column headerText="Current Thread Cpu Time">
+										<h:outputText id="ctct"
+											value="#{threading.currentThreadCpuTime}" />
+										<p:poll interval="10" update="ctct" />
+									</p:column>
+								</p:dataTable>
+
+								<p:dataTable value="#{threadingView._bbs_}" var="threading"
+									style="margin-bottom: 16px;">
+									<p:column headerText="Current Thread User Time">
+										<h:outputText id="ctut"
+											value="#{threading.currentThreadUserTime}" />
+										<p:poll interval="10" update="ctut" />
+									</p:column>
+								</p:dataTable>
+
+							</p:panel> -->
+							<!-- End Threading -->
+
+							<!-- Chart Metrics Namenode Heap-->
+							<!-- <p:panel id="nameNodeHeap" header="NameNode Heap"
+								style="font-size:14pt; width:448px; height:292px; margin-top: 32px; text-align: center">
+
+								<p:donutChart id="heap" model="#{namenodeView.donutModel}"
+									style="width: 100%; height: 224px; stroke: crimson;" />
+								<p:poll interval="10" update="heap" />
+
+								<h:outputText id="persenJvm"
+									value="#{namenodeView._percentageJvmMetrics}"
+									style="font-size:16pt; font-weight: bold" />
+								<p:poll interval="10" update="persenJvm" />
+							</p:panel> -->
+							<!-- End Namenode Metrics -->
+
+							<!-- Chart Metrics Namenode CPU WIO -->
+							<!-- <p:panel id="nameNodeCPUWIO" header="NameNode CPU WIO"
+								style="font-size:14pt; width:448px; height:292px; margin-top: 32px; text-align: center">
+
+								<p:donutChart id="wio" model="#{namenodeWioView.donutModel}"
+									style="width: 100%; height: 224px; stroke: crimson;" />
+								<p:poll interval="10" update="wio" />
+
+								<h:outputText id="persenWio"
+									value="#{namenodeWioView._percentageWriteIO}"
+									style="font-size:16pt; font-weight: bold" />
+								<p:poll interval="10" update="persenWio" />
+							</p:panel> -->
+							<!-- End Data Node Volume -->
+
+							<!-- Chart Metrics Resource Manager Heap -->
+							<!-- <p:panel id="ResourceManagerHeap" header="ResourceManager Heap"
+								style="font-size:14pt; width:448px; height:292px; margin-top: 32px; text-align: center">
+
+								<p:donutChart id="resourceHeap"
+									model="#{resourceManagerHeapView.donutModel}"
+									style="width: 100%; height: 224px; stroke: crimson;" />
+
+								<p:poll interval="10" update="resourceHeap" />
+
+								<h:outputText id="persentaseResource"
+									value="#{resourceManagerHeapView._percentage}"
+									style="font-size:16pt; font-weight: bold" />
+								<p:poll interval="10" update="persentaseResource" />
+
+							</p:panel> -->
+							<!-- End Resource Manager Heap -->
+
+							<!-- Chart Metrics Hbase Heap -->
+							<p:panel id="HbaseHeap" header="MEM"
+								style="font-size:14pt; width:448px; height:292px; margin-top: 32px; text-align: center">
+
+								<p:outputLabel value="Memory"></p:outputLabel>
+
+								<p:chart type="pie" id="memory" responsive="true"
+									model="#{memoryBean.model}" />
+
+								<!-- <p:poll interval="10" update="hbase" /> -->
+
+								<!-- <h:outputText id="persenHBASE"
+									value="#{hbaseHeapView._percentageHBASE}"
+									style="font-size:16pt; font-weight: bold" />
+								<p:poll interval="10" update="persenHBASE" /> -->
+
+							</p:panel>
+							<!-- End Hbase Heap -->
+
+							<!-- <p:panel id="HDFSDisk" header="HDFS2 Disk Usage (GB)"
+								style="font-size:14pt; width:448px; height:292px; margin-top: 32px; margin-right: 248px; text-align: center">
+
+								<p:donutChart id="hdfs2" model="#{hdfsDiskFree.donutModel}"
+									style="width: 100%; height: 224px; stroke: crimson;" />
+								<p:poll interval="10" update="hdfs2" /> -->
+
+							<!-- <h:outputText id="percentage" value="#{hdfsDiskSample.percen}"
+									style="font-size:16pt; font-weight: bold" />
+								<p:poll interval="5" update="percentage" /> -->
+
+							<!-- <p:chart type="pie" id="diskfree" responsive="true"
+									model="#{hdfsDiskFree.pieModel}" 
+									style="width: 100%; height: 224px; stroke: crimson;"/> -->
+							</p:panel>
+
+						</p:dashboard>
+
+						<div style="clear: both" />
+
+					</h:form>
+				</div>
+			</p:tab>
+
+			<!-- cannot running, function not available -->
+			<p:tab title="HEATMAPS">
+
+				<f:facet name="actions">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+							<i class="fa fa-gear" id="bor" style="cursor: pointer"
+								title="Background Operation Running" />
+						</div>
+
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+							<i class="fa fa-bell" id="notif" style="cursor: pointer"
+								title="Notifications" />
+						</div>
+
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+							<i class="fa fa-bars" id="view" style="cursor: pointer"
+								title="Views" />
+						</div>
+
+						<div class="ui-g-12 ui-md-6 ui-lg-6">
+							<p:menuButton value="admin" icon="fa fa-user"
+								style="width:100%; font-size:10pt">
+								<p:menuitem value="Setting" style="font-size:10pt" />
+								<p:menuitem value="Manage YAVA" style="font-size:10pt" />
+								<p:menuitem value="About" style="font-size:10pt" />
+								<p:separator />
+								<p:menuitem value="Sign Out" style="font-size:10pt" />
+							</p:menuButton>
+						</div>
+					</div>
+				</f:facet>
+
+				<p:breadCrumb style="font-size:10pt">
+					<p:menuitem value="Breadcrumb" />
+					<p:menuitem value="Dashboard" />
+					<p:menuitem value="Heatmaps" />
+				</p:breadCrumb>
+
+				<h:form>
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-6">
+							<p:growl id="messages" />
+
+							<h:panelGrid columns="2" style="margin-bottom:10px"
+								cellpadding="5">
+
+								<h:panelGrid style="background:White ; border:Grey"
+									cellpadding="5">
+
+									<p:tieredMenu style="width:150px">
+										<p:submenu label="Select Metric">
+											<p:submenu label="Host">
+												<p:menuitem value="Host Memory Used %"
+													style="font-size:10pt" />
+												<p:menuitem value="Host CPU Wait IO % "
+													style="font-size:10pt" />
+												<p:menuitem value="Host Disk Space Used %"
+													style="font-size:10pt" />
+											</p:submenu>
+											<p:submenu label="YARN">
+												<p:menuitem
+													value="Total Allocatable RAM Utilized per NodeManager"
+													style="font-size:10pt" />
+												<p:menuitem
+													value="Total Allocatable CPU Utilized per NodeManager"
+													style="font-size:10pt" />
+												<p:menuitem value="Container Failures"
+													style="font-size:10pt" />
+												<p:menuitem value="NodeManagerGC Time"
+													style="font-size:10pt" />
+												<p:menuitem value="NodeManager JVM Heap Memory Used"
+													style="font-size:10pt" />
+												<p:menuitem value="Allocated Containers"
+													style="font-size:10pt" />
+												<p:menuitem value="NodeManager RAM Utilized"
+													style="font-size:10pt" />
+												<p:menuitem value="NodeManager CPU Utilized"
+													style="font-size:10pt" />
+												<p:menuitem
+													value="YARN local disk space utilization per NodeManager"
+													style="font-size:10pt" />
+											</p:submenu>
+											<p:submenu label="HDFS">
+												<p:menuitem value="HDFS Bytes Written"
+													style="font-size:10pt" />
+												<p:menuitem value="DataNode Garbage Collection Time"
+													style="font-size:10pt" />
+												<p:menuitem value="DataNode JVM Heap Memory Used"
+													style="font-size:10pt" />
+												<p:menuitem value="DataNode JVM Heap Memory Commited"
+													style="font-size:10pt" />
+												<p:menuitem value="DataNode Process Disk I/O Utilization"
+													style="font-size:10pt" />
+												<p:menuitem value="DataNode Process Network I/O Utilization"
+													style="font-size:10pt" />
+												<p:menuitem value="HDFS Space Utilization"
+													style="font-size:10pt" />
+												<p:menuitem value="HDFS Bytes Read" style="font-size:10pt" />
+											</p:submenu>
+											<p:submenu label="HBase">
+												<p:menuitem value="HBase Memstore Sizes"
+													style="font-size:10pt" />
+												<p:menuitem value="HBase Read Request Count"
+													style="font-size:10pt" />
+												<p:menuitem value="HBase Write Request Count"
+													style="font-size:10pt" />
+												<p:menuitem value="HBase Regions" style="font-size:10pt" />
+												<p:menuitem value="HBase Compaction Queue Size"
+													style="font-size:10pt" />
+											</p:submenu>
+										</p:submenu>
+									</p:tieredMenu>
+
+									<h:panelGrid columns="2">
+										<div class="tile"
+											style="background: Lightgreen; height: 20px; width: 40px">
+											<p:outputLabel value="0MB - 205MB" />
+										</div>
+										<div class="tile"
+											style="background: Green; height: 20px; width: 40px">
+											<p:outputLabel value="205MB - 410MB" />
+										</div>
+										<div class="tile"
+											style="background: Yellow; height: 20px; width: 40px">
+											<p:outputLabel value="410MB - 614MB" />
+										</div>
+										<div class="tile"
+											style="background: Orange; height: 20px; width: 40px">
+											<p:outputLabel value="614MB - 819MB" />
+										</div>
+										<div class="tile"
+											style="background: Red; height: 20px; width: 40px">
+											<p:outputLabel value="819MB - 1024MB" />
+										</div>
+										<div class="tile"
+											style="background: Grey; height: 20px; width: 40px">
+											<p:outputLabel value="Invalid data" />
+										</div>
+										<div class="tile"
+											style="background: Black; height: 20px; width: 40px">
+											<p:outputLabel value="Data Not Available" />
+										</div>
+										<div class="tile"
+											style="background: Lightgrey; height: 20px; width: 40px">
+											<p:outputLabel value="Not Applicable" />
+										</div>
+									</h:panelGrid>
+
+									<div>
+										<p:outputLabel value="Maximum:" />
+									</div>
+
+									<div>
+										<div class="ui-g ui-fluid">
+											<div class="ui-inputgroup">
+												<p:inputText placeholder="1024" style="length:200" />
+												<p:commandButton value="MB" styleClass="white-button" />
+											</div>
+										</div>
+									</div>
+
+								</h:panelGrid>
+								<div>
+									<div>
+										<h2>HDFS Bytes Read</h2>
+									</div>
+									<div>
+										<p:outputLabel value="/default-rack"></p:outputLabel>
+									</div>
+									<h:panelGrid columns="3" style="background:white"
+										cellpadding="3">
+										<div class="tile"
+											style="background: Green; height: 20px; width: 40px">
+											<div class="tile"
+												style="background: Green; height: 20px; width: 40px">
+												<div class="tile"
+													style="background: Green; height: 20px; width: 40px" />
+											</div>
+										</div>
+									</h:panelGrid>
+								</div>
+							</h:panelGrid>
+						</div>
+					</div>
+				</h:form>
+			</p:tab>
+
+			<!-- cannot running, function not available -->
+			<p:tab title="CONFIG HISTORY">
+
+				<f:facet name="actions">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+							<i class="fa fa-gear" id="bor" style="cursor: pointer"
+								title="Background Operation Running" />
+
+						</div>
+
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+							<i class="fa fa-bell" id="notif" style="cursor: pointer"
+								title="Notifications" />
+
+						</div>
+
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+							<i class="fa fa-bars" id="view" style="cursor: pointer"
+								title="Views" />
+
+						</div>
+
+						<div class="ui-g-12 ui-md-6 ui-lg-6">
+							<p:menuButton value="admin" icon="fa fa-user"
+								style="width:100%; font-size:10pt">
+								<p:menuitem value="Setting" style="font-size:10pt" />
+								<p:menuitem value="Manage YAVA" style="font-size:10pt" />
+								<p:menuitem value="About" style="font-size:10pt" />
+								<p:separator />
+								<p:menuitem value="Sign Out" style="font-size:10pt" />
+							</p:menuButton>
+						</div>
+					</div>
+				</f:facet>
+
+				<p:breadCrumb style="font-size:10pt">
+					<p:menuitem value="Breadcrumb" />
+					<p:menuitem value="Dashboard" />
+					<p:menuitem value="Config History" />
+				</p:breadCrumb>
+
+			</p:tab>
+
+			
+
+		</p:tabView>
+
+	</h:form>
+
+</ui:composition>
+
